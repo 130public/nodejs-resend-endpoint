@@ -36,6 +36,14 @@ app.use(morgan('combined'));
 
 
 // ENDPOINTS
+app.get('/', (_req: Request, res: Response) => {
+  return res.send('Express Typescript on Vercel')
+})
+
+app.get('/ping', (_req: Request, res: Response) => {
+  return res.send('pong 🏓')
+})
+
 app.get('/api/test/get', (request: Request, response: Response) => {
   response.send({
       body: 'test',
