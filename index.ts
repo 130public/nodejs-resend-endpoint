@@ -75,5 +75,7 @@ app.post('/api/email', (request: Request, response: Response) => {
 });
 
 app.listen(port, () => {
-  console.log(`Timezones by location application is running on port ${port}.`);
+  console.log(`Application is running on port ${port}.`);
 });
+
+module.exports = app
