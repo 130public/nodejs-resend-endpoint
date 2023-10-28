@@ -11,7 +11,7 @@ To get the most out of this guide, you’ll need to:
 
 ## Instructions
 
-1. Replace `re_123456789` on `index.ts` with your API key.
+1. Setup environment variables, you can use the sample.env file
 
 2. Install dependencies:
 
@@ -24,9 +24,9 @@ yarn
 3. Execute the following command:
 
   ```sh
-npm run dev
+yarn start
   ```
 
-## License
+## Resources
 
-MIT License
+[This site](https://dev.to/tirthpatel/deploy-node-ts-express-typescript-on-vercel-284h) helped get vercel and typescript set up 
