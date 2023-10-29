@@ -40,11 +40,11 @@ app.get('/', (_req: Request, res: Response) => {
   return res.send('Express Typescript on Vercel')
 })
 
-app.get('/ping', (_req: Request, res: Response) => {
+app.get('/ping', cors(corsOptions), (_req: Request, res: Response) => {
   return res.send('pong 🏓')
 })
 
-app.get('/api/test/get', (request: Request, response: Response) => {
+app.get('/api/test/get', cors(corsOptions), (request: Request, response: Response) => {
   response.send({
       body: 'test',
       key: process.env.RESEND_API_KEY
@@ -52,7 +52,7 @@ app.get('/api/test/get', (request: Request, response: Response) => {
 
 });
 
-app.post('/api/test/post', (request: Request, response: Response) => {
+app.post('/api/test/post', cors(corsOptions), (request: Request, response: Response) => {
   response.send({
     query: request.query,
     body: request.body,
@@ -60,7 +60,7 @@ app.post('/api/test/post', (request: Request, response: Response) => {
   })
 });
 
-app.post('/api/email', (request: Request, response: Response) => {
+app.post('/api/email', cors(corsOptions), (request: Request, response: Response) => {
 
   const resend = new Resend(process.env.RESEND_API_KEY);
   const body = request.body;

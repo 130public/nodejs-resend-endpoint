@@ -42,23 +42,23 @@ app.use(morgan('combined'));
 app.get('/', (_req, res) => {
     return res.send('Express Typescript on Vercel');
 });
-app.get('/ping', (_req, res) => {
+app.get('/ping', cors(corsOptions), (_req, res) => {
     return res.send('pong 🏓');
 });
-app.get('/api/test/get', (request, response) => {
+app.get('/api/test/get', cors(corsOptions), (request, response) => {
     response.send({
         body: 'test',
         key: process.env.RESEND_API_KEY
     });
 });
-app.post('/api/test/post', (request, response) => {
+app.post('/api/test/post', cors(corsOptions), (request, response) => {
     response.send({
         query: request.query,
         body: request.body,
         key: process.env.RESEND_API_KEY
     });
 });
-app.post('/api/email', (request, response) => {
+app.post('/api/email', cors(corsOptions), (request, response) => {
     const resend = new resend_1.Resend(process.env.RESEND_API_KEY);
     const body = request.body;
     (function () {
