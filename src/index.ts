@@ -1,9 +1,7 @@
 import { Resend } from 'resend';
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 
-
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
@@ -17,18 +15,21 @@ const app = express();
 // adding Helmet to enhance your Rest API's security
 app.use(helmet());
 
-// // using bodyParser to parse JSON bodies into JS objects
-app.use(bodyParser.json());
+// parse JSON bodies into JS objects
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // enabling CORS for all requests
-var corsOptions = {
+const whitelist = ['http://developer1.com', 'http://developer2.com'];
+
+const options: cors.CorsOptions = {
     optionsSuccessStatus: 200,
-    origin: 'http://example.com',
+    origin: ['http:example.com'],
     methods: process.env.ACCESS_CONTROL_ALLOW_METHODS,
-    headers: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
-    credentials: process.env.ACCESS_CONTROL_ALLOW_CREDENTIALS
+    allowedHeaders: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
+    credentials: true
 }
+app.use(cors(options));
 
 
 // // adding morgan to log HTTP requests

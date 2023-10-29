@@ -14,8 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const resend_1 = require("resend");
 const express_1 = __importDefault(require("express"));
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors_1 = __importDefault(require("cors"));
 const helmet = require('helmet');
 const morgan = require('morgan');
 const env = require("dotenv").config();
@@ -24,17 +23,19 @@ const port = process.env.PORT || 8080;
 const app = (0, express_1.default)();
 // adding Helmet to enhance your Rest API's security
 app.use(helmet());
-// // using bodyParser to parse JSON bodies into JS objects
-app.use(bodyParser.json());
+// parse JSON bodies into JS objects
+app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 // enabling CORS for all requests
-var corsOptions = {
+const whitelist = ['http://developer1.com', 'http://developer2.com'];
+const options = {
     optionsSuccessStatus: 200,
-    origin: 'http://example.com',
+    origin: ['http:example.com'],
     methods: process.env.ACCESS_CONTROL_ALLOW_METHODS,
-    headers: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
-    credentials: process.env.ACCESS_CONTROL_ALLOW_CREDENTIALS
+    allowedHeaders: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
+    credentials: true
 };
+app.use((0, cors_1.default)(options));
 // // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 // ENDPOINTS
@@ -44,11 +45,11 @@ app.get("/", (_req, res) => {
         text: "You should not see this via a CORS request."
     });
 });
-app.head("/ping", cors(), (_req, res) => {
+app.head("/ping", (0, cors_1.default)(), (_req, res) => {
     console.info("HEAD /simple-cors");
     res.sendStatus(204);
 });
-app.get('/ping', cors(), (_req, res) => {
+app.get('/ping', (0, cors_1.default)(), (_req, res) => {
     res.json('pong 🏓');
 });
 app.get('/api/test/get', (request, response) => {
