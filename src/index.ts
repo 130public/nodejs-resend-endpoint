@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 // enabling CORS for all requests
 var corsOptions = {
     optionsSuccessStatus: 200,
-    origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN,
+    origin: 'http://example.com',
     methods: process.env.ACCESS_CONTROL_ALLOW_METHODS,
     headers: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
     credentials: process.env.ACCESS_CONTROL_ALLOW_CREDENTIALS
@@ -37,14 +37,14 @@ app.use(morgan('combined'));
 
 // ENDPOINTS
 app.get('/', (_req: Request, res: Response) => {
-  return res.send('Express Typescript on Vercel')
+  return res.send('CORS restricted')
 })
 
-app.get('/ping', cors(corsOptions), (_req: Request, res: Response) => {
+app.get('/ping', (_req: Request, res: Response) => {
   return res.send('pong 🏓')
 })
 
-app.get('/api/test/get', cors(corsOptions), (request: Request, response: Response) => {
+app.get('/api/test/get', (request: Request, response: Response) => {
   response.send({
       body: 'test',
       key: process.env.RESEND_API_KEY
@@ -52,7 +52,7 @@ app.get('/api/test/get', cors(corsOptions), (request: Request, response: Respons
 
 });
 
-app.post('/api/test/post', cors(corsOptions), (request: Request, response: Response) => {
+app.post('/api/test/post', (request: Request, response: Response) => {
   response.send({
     query: request.query,
     body: request.body,
@@ -60,7 +60,7 @@ app.post('/api/test/post', cors(corsOptions), (request: Request, response: Respo
   })
 });
 
-app.post('/api/email', cors(corsOptions), (request: Request, response: Response) => {
+app.post('/api/email', (request: Request, response: Response) => {
 
   const resend = new Resend(process.env.RESEND_API_KEY);
   const body = request.body;
