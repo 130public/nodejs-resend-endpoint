@@ -29,14 +29,15 @@ var corsOptions = {
     headers: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
     credentials: process.env.ACCESS_CONTROL_ALLOW_CREDENTIALS
 }
-app.use(cors(corsOptions));
+
 
 // // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 
 
 // ENDPOINTS
-app.get('/', (_req: Request, res: Response) => {
+app.options("/", cors(corsOptions));
+app.get('/', cors(corsOptions), (_req: Request, res: Response) => {
   return res.send('CORS restricted')
 })
 
