@@ -26,11 +26,10 @@ app.use(helmet());
 // parse JSON bodies into JS objects
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-// enabling CORS for all requests
-const whitelist = ['http://developer1.com', 'http://developer2.com'];
+// CORS
 const options = {
     optionsSuccessStatus: 200,
-    origin: ['http:example.com'],
+    origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN,
     methods: process.env.ACCESS_CONTROL_ALLOW_METHODS,
     allowedHeaders: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
     credentials: true
@@ -39,31 +38,11 @@ app.use((0, cors_1.default)(options));
 // // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 // ENDPOINTS
-app.get("/", (_req, res) => {
-    console.info("GET /no-cors");
-    res.json({
-        text: "You should not see this via a CORS request."
-    });
+app.get('/', (request, response) => {
+    return response.send('API server');
 });
-app.head("/ping", (0, cors_1.default)(), (_req, res) => {
-    console.info("HEAD /simple-cors");
-    res.sendStatus(204);
-});
-app.get('/ping', (0, cors_1.default)(), (_req, res) => {
-    res.json('pong 🏓');
-});
-app.get('/api/test/get', (request, response) => {
-    response.send({
-        body: 'test',
-        key: process.env.RESEND_API_KEY
-    });
-});
-app.post('/api/test/post', (request, response) => {
-    response.send({
-        query: request.query,
-        body: request.body,
-        key: process.env.RESEND_API_KEY
-    });
+app.get('/ping', (request, response) => {
+    return response.send('pong 🏓');
 });
 app.post('/api/email', (request, response) => {
     const resend = new resend_1.Resend(process.env.RESEND_API_KEY);
