@@ -38,12 +38,18 @@ var corsOptions = {
 // // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 // ENDPOINTS
-app.options("/", cors(corsOptions));
-app.get('/', cors(corsOptions), (_req, res) => {
-    return res.send('CORS restricted');
+app.get("/", (_req, res) => {
+    console.info("GET /no-cors");
+    res.json({
+        text: "You should not see this via a CORS request."
+    });
 });
-app.get('/ping', (_req, res) => {
-    return res.send('pong 🏓');
+app.head("/ping", cors(), (_req, res) => {
+    console.info("HEAD /simple-cors");
+    res.sendStatus(204);
+});
+app.get('/ping', cors(), (_req, res) => {
+    res.json('pong 🏓');
 });
 app.get('/api/test/get', (request, response) => {
     response.send({

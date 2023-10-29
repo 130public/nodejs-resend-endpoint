@@ -36,13 +36,19 @@ app.use(morgan('combined'));
 
 
 // ENDPOINTS
-app.options("/", cors(corsOptions));
-app.get('/', cors(corsOptions), (_req: Request, res: Response) => {
-  return res.send('CORS restricted')
-})
+app.get("/", (_req: Request, res: Response) => {
+  console.info("GET /no-cors");
+  res.json({
+    text: "You should not see this via a CORS request."
+  });
+});
 
-app.get('/ping', (_req: Request, res: Response) => {
-  return res.send('pong 🏓')
+app.head("/ping", cors(), (_req: Request, res: Response) => {
+  console.info("HEAD /simple-cors");
+  res.sendStatus(204);
+});
+app.get('/ping', cors(), (_req: Request, res: Response) => {
+  res.json('pong 🏓')
 })
 
 app.get('/api/test/get', (request: Request, response: Response) => {
