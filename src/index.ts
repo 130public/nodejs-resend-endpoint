@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // CORS
 const options: cors.CorsOptions = {
     optionsSuccessStatus: 200,
-    origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN,
+    origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN.split(','),
     methods: process.env.ACCESS_CONTROL_ALLOW_METHODS,
     allowedHeaders: process.env.ACCESS_CONTROL_ALLOW_HEADERS,
     credentials: true
