@@ -1,6 +1,6 @@
-# Resend with Node.js
+# Resend.com with Node.js
 
-This example shows how to use Resend with [Node.js](https://nodejs.org).
+This a production ready node.js app, tailored for Vercel serverless functions.
 
 ## Prerequisites
 
