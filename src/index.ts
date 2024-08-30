@@ -51,7 +51,7 @@ app.post('/api/email', (request: Request, response: Response) => {
   (async function() {
     try {
       const data = await resend.emails.send({
-        from: `${body.firstname} ${body.lastname} <${body.from}>`,
+        from: `${body.firstname} ${body.lastname} <${process.env.SERVERADMIN_EMAIL}>`,
         to: [ `${process.env.CONTACT_RECIPIENT_EMAIL}` ],
         reply_to: `${body.from}`,
         subject: `Website contact from  ${body.firstname} ${body.lastname}`,

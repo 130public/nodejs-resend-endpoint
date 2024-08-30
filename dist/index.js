@@ -51,7 +51,7 @@ app.post('/api/email', (request, response) => {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const data = yield resend.emails.send({
-                    from: `${body.firstname} ${body.lastname} <${body.from}>`,
+                    from: `${body.firstname} ${body.lastname} <${process.env.SERVERADMIN_EMAIL}>`,
                     to: [`${process.env.CONTACT_RECIPIENT_EMAIL}`],
                     reply_to: `${body.from}`,
                     subject: `Website contact from  ${body.firstname} ${body.lastname}`,
