@@ -51,8 +51,9 @@ app.post('/api/email', (request: Request, response: Response) => {
   (async function() {
     try {
       const data = await resend.emails.send({
-        from: `${body.firstname} ${body.lastname} <${process.env.SERVERADMIN_EMAIL}>`,
+        from: `${body.firstname} ${body.lastname} <${body.from}>`,
         to: [ `${process.env.CONTACT_RECIPIENT_EMAIL}` ],
+        reply_to: `${body.from}`,
         subject: `Website contact from  ${body.firstname} ${body.lastname}`,
         html: `<strong>${body.subject}</strong><br/>${body.message}<br/><br/>${body.firstname} ${body.lastname}<br/>${body.from}`
       });
